@@ -191,7 +191,7 @@
         "difficulty": 2,
         "masterRules": [ 4, 5 ]
     },
-	{
+    {
         "name": "Tearlaments",
         "deck": "Tearlaments",
         "difficulty": 3,
@@ -256,5 +256,23 @@
         "deck": "[ImaginaryArk]",
         "difficulty": 2,
         "masterRules": [ 7 ]
+    },
+    {
+        "name": "Limit One - 1 CoSS",
+        "deck": "Coalition of Sagacious Spellcasters",
+        "difficulty": 2,
+        "masterRules": [ 5 ]
+    },
+    {
+        "name": "Limit One - 2 AoB",
+        "deck": "Alliance of Beasts",
+        "difficulty": 2,
+        "masterRules": [ 5 ]
+    },
+    {
+        "name": "Limit One - 2 ANSiBfA",
+        "deck": "A New Star is Born from Apocalypse",
+        "difficulty": 2,
+        "masterRules": [ 5 ]
     }
 ]
