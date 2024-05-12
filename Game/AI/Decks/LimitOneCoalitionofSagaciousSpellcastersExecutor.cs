@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using WindBot;
 using WindBot.Game;
 using WindBot.Game.AI;
+using System.Linq;
 
 namespace WindBot.Game.AI.Decks
 {
-    [Deck("Coalition of Sagacious Spellcasters", "AI_LimitOneCoalitionofSagaciousSpellcasters", "Master Duel")]
+    [Deck("CoSS", "AI_LimitOneCoalitionofSagaciousSpellcasters", "Master Duel")]
     public class LimitOneCoalitionofSagaciousSpellcastersExecutor : DefaultExecutor
     {
         public class CardId {
@@ -86,11 +87,516 @@ namespace WindBot.Game.AI.Decks
 
         public LimitOneCoalitionofSagaciousSpellcastersExecutor(GameAI ai, Duel duel)
             : base(ai, duel) {
-            AddExecutor(ExecutorType.SpSummon);
-            AddExecutor(ExecutorType.Activate, DefaultDontChainMyself);
-            AddExecutor(ExecutorType.SummonOrSet, DefaultMonsterSummon);
+
+            AddExecutor(ExecutorType.Activate, CardId.HarpiesFeatherDuster, DefaultHarpiesFeatherDusterFirst);
+            AddExecutor(ExecutorType.Activate, CardId.InfiniteImpermanence, DefaultInfiniteImpermanence);
+            AddExecutor(ExecutorType.Activate, CardId.Raigeki, DefaultRaigeki);
+            AddExecutor(ExecutorType.Activate, CardId.AleistertheInvoker, AAleister);
+            AddExecutor(ExecutorType.Activate, CardId.FairyTailLuna, AFairyTailLuna);
+            AddExecutor(ExecutorType.Activate, CardId.OrbitalHydralander, AOrbitalHydralander);
+            AddExecutor(ExecutorType.Activate, CardId.ChickenGame, DefaultChickenGame);
+            AddExecutor(ExecutorType.Activate, CardId.FallenofAlbaz);
+            AddExecutor(ExecutorType.Activate, CardId.TheGoldenSwordsoul);
+            AddExecutor(ExecutorType.Activate, CardId.BlazingCartesiatheVirtuous);
+            AddExecutor(ExecutorType.Activate, CardId.TheIrisSwordsoul);
+            AddExecutor(ExecutorType.Activate, CardId.GranguignoltheDuskDragon, AGranguignol);
+            AddExecutor(ExecutorType.Activate, CardId.AlbiontheSanctifireDragon, AAlbion);
+            AddExecutor(ExecutorType.Activate, CardId.InvokedMechaba, DefaultDontChainMyself);
+            AddExecutor(ExecutorType.Activate, CardId.PSYFramelordOmega);
+
+            // Combo AccesscodeTalker
+            AddExecutor(ExecutorType.Activate, CardId.SeleneQueenoftheMasterMagicians);
+            AddExecutor(ExecutorType.SpSummon, CardId.SeleneQueenoftheMasterMagicians);
+            AddExecutor(ExecutorType.Activate, CardId.AccesscodeTalker);
+            AddExecutor(ExecutorType.SpSummon, CardId.AccesscodeTalker);
+
+            // Combo Aleister
+            AddExecutor(ExecutorType.Activate, CardId.Metaverse, AMetaverse);
+            AddExecutor(ExecutorType.Activate, CardId.MagicalMeltdown, AMeltdown);
+            AddExecutor(ExecutorType.Summon, CardId.AleistertheInvoker, SMonster);
+            AddExecutor(ExecutorType.SpSummon, CardId.ArtemistheMagistusMoonMaiden, SpArtemis);
+            AddExecutor(ExecutorType.Activate, CardId.Invocation, AInvocation);
+
+            // Combo Spellbook
+            AddExecutor(ExecutorType.SpSummon, CardId.HighPriestessofProphecy);
+            AddExecutor(ExecutorType.Summon, CardId.SpellbookMagicianofProphecy, SMonster);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofJudgment,ASpeelbookJudgment);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofSecrets, ASpellbookSecrets);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofKnowledge);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofLife,ASpellbookLife);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookoftheMaster, ASpellbookMaster);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofPower, ASpellbookPower);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofEternity);
+            AddExecutor(ExecutorType.Activate, CardId.TheGrandSpellbookTower,ASpeelbookTower);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofWisdom);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofFate, ASpeelbookFate);
+            AddExecutor(ExecutorType.Activate, CardId.HighPriestessofProphecy, AHighPriest);
+
+            // Combo Dogmatika
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaAdintheEnlightened);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaAdintheEnlightened, ADogmaticaAdin);
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaEcclesiatheVirtuous);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaEcclesiatheVirtuous, ADogmaticaEcclesia);
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaTheotheIronPunch);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaTheotheIronPunch, ADogmaticaIron);
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaFleurdelistheKnighted, ADogmaticaFleurde);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaFleurdelistheKnighted);
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaMaximus);
+            AddExecutor(ExecutorType.SpSummon, CardId.DogmatikaAshiyan);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaAshiyan, ADogmaticaAshiyan);
+            AddExecutor(ExecutorType.Activate, CardId.DogmatikaPunishment, ADogmanicaPunishment);
+            
+
+            // Other Follow Up
+            AddExecutor(ExecutorType.Activate, CardId.TheBookoftheLaw, ABookofLaw);
+            AddExecutor(ExecutorType.Activate, CardId.NadirServant, ANadirServant);
+
+            // Special Summon
+            AddExecutor(ExecutorType.SpSummon, CardId.OrbitalHydralander);
+            AddExecutor(ExecutorType.SpSummon, CardId.IncredibleEcclesiatheVirtuous);
+            AddExecutor(ExecutorType.SpSummon, CardId.TheGoldenSwordsoul);
+            AddExecutor(ExecutorType.SpSummon, CardId.BlazingCartesiatheVirtuous);
+            AddExecutor(ExecutorType.SpSummon, CardId.TheIrisSwordsoul);
+            AddExecutor(ExecutorType.SpSummon, CardId.ArtemistheMagistusMoonMaiden);
+            AddExecutor(ExecutorType.SpSummon, CardId.PSYFramelordOmega);
+
+            // Summon Monster
+            AddExecutor(ExecutorType.Summon, CardId.FallenofAlbaz, SAlbaz);
+            AddExecutor(ExecutorType.Summon, CardId.IncredibleEcclesiatheVirtuous);
+            AddExecutor(ExecutorType.Summon, CardId.FairyTailLuna, SMonster);
+            AddExecutor(ExecutorType.Summon, CardId.FairyTailSnow, SMonster);
+            AddExecutor(ExecutorType.Summon, CardId.DogmatikaEcclesiatheVirtuous, SMonster);
+
+            // More Follow Up
+            AddExecutor(ExecutorType.Activate, CardId.WonderWand, AWonderWand);
+            AddExecutor(ExecutorType.Activate, CardId.MonsterReborn, AMonsterReborn);
+
+
             AddExecutor(ExecutorType.Repos, DefaultMonsterRepos);
-            AddExecutor(ExecutorType.SpellSet);
+            AddExecutor(ExecutorType.SpellSet, DefaultSpellSet);
+        }
+
+        bool alreadySummon = false;
+
+        // Not Implemented yet
+        bool judgementActivate = false;
+        int counterJudgement = 0;
+
+        readonly List<int> SpellbookCards = new List<int> {
+            CardId.SpellbookofSecrets,
+            CardId.SpellbookMagicianofProphecy,
+            CardId.SpellbookofJudgment,
+            CardId.SpellbookofLife,
+            CardId.SpellbookofFate,
+            CardId.SpellbookofKnowledge,
+            CardId.SpellbookoftheMaster,
+            CardId.SpellbookofPower,
+            CardId.SpellbookofWisdom,
+            CardId.SpellbookofEternity,
+            CardId.TheGrandSpellbookTower,
+        };
+
+        readonly List<int> DogmaticaCards = new List<int> {
+            CardId.DogmatikaEcclesiatheVirtuous,
+            CardId.DogmatikaFleurdelistheKnighted,
+            CardId.DogmatikaMaximus,
+            CardId.DogmatikaTheotheIronPunch,
+            CardId.DogmatikaAdintheEnlightened,
+            CardId.DogmatikaAshiyan,
+        };
+
+        readonly List<int> FieldCards = new List<int> {
+            CardId.MagicalMeltdown,
+            CardId.TheGrandSpellbookTower,
+            CardId.ChickenGame
+        };
+
+        readonly List<int> InvokedMonsters = new List<int> {
+            CardId.InvokedMechaba,
+            CardId.InvokedAugoeides,
+            CardId.InvokedMagellanica,
+            CardId.InvokedPurgatrio,
+            CardId.InvokedCaliga
+        };
+
+        public override void OnNewTurn() {
+            alreadySummon = false;
+            base.OnNewTurn();
+        }
+
+        private bool SMonster() {
+            alreadySummon = true;
+            return true;
+        }
+
+        private bool AAleister() {
+            // Search effect
+            if (Card.Location == CardLocation.MonsterZone) {
+                return true;
+            }
+
+            // Activate only in Damage Calculation
+            if (Duel.Phase != DuelPhase.DamageCal) {
+                return false;
+            }
+
+            ClientCard myMonster = Bot.BattlingMonster;
+            if (!myMonster.HasType(CardType.Fusion)) {
+                return false;
+            }
+
+            ClientCard enemyMonster = Enemy.BattlingMonster;
+            if (enemyMonster != null) {
+                int diff = enemyMonster.GetDefensePower() - myMonster.Attack;
+                if (diff > 0 && (diff < 1000 || Bot.LifePoints - diff < 0)) {
+                    AI.SelectCard(myMonster);
+                    return true;
+                }
+            }
+
+            if (Enemy.LifePoints - myMonster.Attack <= 1000) {
+                AI.SelectCard(myMonster);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool AMeltdown() {
+            AI.SelectYesNo(true);
+            return true;
+        }
+
+        private bool SpArtemis() {
+            if (Bot.HasInMonstersZone(CardId.AleistertheInvoker)) {
+                AI.SelectMaterials(CardId.AleistertheInvoker);
+                return true;
+            }
+            return false;
+        }
+
+        private bool AInvocation() {
+            // Shuffle
+            if(Card.Location == CardLocation.Grave) {
+                return true;
+            }
+
+            IList<ClientCard> enemyLights = Enemy.Graveyard.GetMatchingCards(card => card.HasAttribute(CardAttribute.Light));
+            if (enemyLights.Count > 0) {
+                AI.SelectCard(CardId.InvokedMechaba);
+                AI.SelectMaterials(enemyLights);
+                return true;
+            }
+
+            if (Bot.HasInMonstersZoneOrInGraveyard(CardId.ArtemistheMagistusMoonMaiden)) {
+                AI.SelectCard(CardId.InvokedMechaba);
+                AI.SelectMaterials(CardId.ArtemistheMagistusMoonMaiden);
+                return true;
+            }
+
+            IList<ClientCard> enemyFusion = Enemy.Graveyard.GetMatchingCards(card => card.HasType(CardType.Fusion));
+            if (enemyFusion.Count > 0) {
+                AI.SelectCard(CardId.InvokedAugoeides);
+                AI.SelectMaterials(enemyFusion);
+                return true;
+            }
+
+            if (Bot.Graveyard.GetMatchingCardsCount(card => card.HasAttribute(CardAttribute.Light)) > 0) {
+                AI.SelectCard(CardId.InvokedMechaba);
+                return true;
+            }
+
+            IList<ClientCard> enemyDarks = Enemy.Graveyard.GetMatchingCards(card => card.HasAttribute(CardAttribute.Dark));
+            if (enemyDarks.Count > 0) {
+                AI.SelectCard(CardId.InvokedCaliga);
+                AI.SelectMaterials(enemyDarks);
+                return true;
+            }
+
+            IList<ClientCard> enemyFires = Enemy.Graveyard.GetMatchingCards(card => card.HasAttribute(CardAttribute.Dark));
+            if (enemyFires.Count > 0) {
+                AI.SelectCard(CardId.InvokedPurgatrio);
+                AI.SelectMaterials(enemyFires);
+                return true;
+            }
+
+            IList<ClientCard> enemyEarths = Enemy.Graveyard.GetMatchingCards(card => card.HasAttribute(CardAttribute.Dark));
+            if (enemyEarths.Count > 0) {
+                AI.SelectCard(CardId.InvokedMagellanica);
+                AI.SelectMaterials(enemyEarths);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ASpellbookSecrets() {
+            if (alreadySummon) {
+                // Have Other Spellbook
+                if (Bot.HasInHand(SpellbookCards)) {
+                    AI.SelectCard(SpellbookCards);
+                    return true;
+                }
+            } else {
+                AI.SelectCard(CardId.SpellbookMagicianofProphecy);
+                return true;
+            }
+            return false;
+        }
+
+        private bool ASpellbookPower() {
+            ClientCard bestSpellcaster = Bot.MonsterZone.GetMonsters().Where(card => card.HasRace(CardRace.SpellCaster)).OrderBy(card => card.Attack).LastOrDefault();
+            if(bestSpellcaster != null) {
+                AI.SelectCard(bestSpellcaster);
+                return true;
+            }
+            return false;
+        }
+
+        private bool ASpellbookMaster() {
+            if (Bot.HasInGraveyard(CardId.SpellbookofSecrets)) {
+                AI.SelectCard(CardId.SpellbookofSecrets);
+            }
+            return true;
+        }
+
+        private bool ASpellbookLife() {
+            int[] bestSummon = new int[] {
+                CardId.BlazingCartesiatheVirtuous,
+                CardId.DogmatikaEcclesiatheVirtuous,
+                CardId.FairyTailLuna,
+                CardId.FairyTailSnow,
+            };
+            int banyakKartu = Bot.Graveyard.GetMatchingCardsCount(card => card.IsCode(bestSummon));
+            if (banyakKartu > 0) {
+                IList<ClientCard> notBestSummon = Bot.Graveyard.GetMatchingCards(card => !card.IsCode(bestSummon));
+                if (notBestSummon.Count > 0) {
+                    AI.SelectCard(notBestSummon);
+                } else {
+                    if ( banyakKartu >= 2) {
+                        AI.SelectCard(bestSummon);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            AI.SelectNextCard(bestSummon);
+
+            return true;
+        }
+
+        private bool ASpeelbookTower() {
+            // Draw and Return
+            if(Duel.Phase == DuelPhase.Standby) {
+                AI.SelectCard(SpellbookCards);
+            }
+            if(Card.Location == CardLocation.Grave) {
+                AI.SelectCard(
+                    CardId.DogmatikaEcclesiatheVirtuous,
+                    CardId.FairyTailLuna,
+                    CardId.FairyTailSnow,
+                    CardId.BlazingCartesiatheVirtuous,
+                    CardId.SpellbookMagicianofProphecy);
+            }
+            
+            return false;
+        }
+
+        private bool ASpeelbookFate() {
+            int spellbookInGy = Bot.Graveyard.GetMatchingCardsCount(card => card.IsCode(SpellbookCards));
+            if(spellbookInGy == 1) {
+                AI.SelectCard(Util.GetBestEnemySpell());
+                return true;
+            } else if (spellbookInGy > 1) {
+                AI.SelectCard(Util.GetBestEnemyMonster());
+                return true;
+            }
+            return false;
+        }
+
+        private bool ASpeelbookJudgment() {
+            if(Duel.Phase == DuelPhase.End) {
+                AI.SelectCard(SpellbookCards);
+                if(counterJudgement >= 4) {
+                    AI.SelectNextCard(CardId.DogmatikaEcclesiatheVirtuous, CardId.FairyTailLuna);
+                } else {
+                    AI.SelectNextCard(CardId.SpellbookMagicianofProphecy);
+                }
+            }
+            if(Duel.Player == 0) {
+                judgementActivate = true;
+                return true;
+            }
+            return false;
+        }
+
+        private bool AHighPriest() {
+            if (Util.IsOneEnemyBetter()) {
+                List<int> worstSpellbook = SpellbookCards;
+                worstSpellbook.Reverse();
+                AI.SelectCard(worstSpellbook);
+                AI.SelectNextCard(Util.GetBestEnemyMonster());
+                return true;
+            }
+            return false;
+        }
+
+        private bool AMetaverse() {
+            AI.SelectCard(FieldCards);
+            return true;
+        }
+
+        private bool ABookofLaw() {
+            if(Enemy.MonsterZone.GetMonsters().Count == 0) {
+                ClientCard tributedCard = Bot.MonsterZone.GetFirstMatchingFaceupCard(card=>card.IsCode(InvokedMonsters));
+                ClientCard summonedCard = Bot.ExtraDeck.GetMatchingCards(card => card.IsCode(InvokedMonsters) && card.Attribute != tributedCard.Attribute).OrderBy(card => card.Attack).LastOrDefault();
+                if(Enemy.LifePoints <= summonedCard.Attack) {
+                    AI.SelectCard(tributedCard);
+                    AI.SelectNextCard(summonedCard);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool AFairyTailLuna() {
+            if(Enemy.GetMonsterCount() > 0) {
+                AI.SelectCard(Util.GetBestEnemyMonster());
+            }
+            return true;
+        }
+
+        private bool AOrbitalHydralander() {
+            if(Util.GetBestEnemyCard() != null) {
+                AI.SelectCard(Util.GetBestEnemyCard());
+                return true;
+            }
+            return false;
+        }
+
+        private bool AWonderWand() {
+            if(Card.Location == CardLocation.Hand) {
+                ClientCard myBest = Bot.MonsterZone.GetMonsters().GetMatchingCards(card => card.HasRace(CardRace.SpellCaster)).OrderBy(card => card.Attack).LastOrDefault();
+                ClientCard enemyBest = Util.GetBestEnemyMonster();
+                if (Util.IsOneEnemyBetter() && myBest.Attack + 500 > enemyBest.GetDefensePower()) {
+                    AI.SelectCard(myBest);
+                    return true;
+                } else {
+                    ClientCard myWorst = Bot.MonsterZone.GetMonsters().GetMatchingCards(card => card.HasRace(CardRace.SpellCaster)).OrderBy(card => card.Attack).FirstOrDefault();
+                    AI.SelectCard(myWorst);
+                    return true;
+                }
+            }
+
+            if(Card.Location == CardLocation.SpellZone) {
+                ClientCard target = Card.EquipTarget;
+                if(Enemy.GetMonsterCount() == 0) {
+                    return true;
+                }
+
+                ClientCard enemyBest = Util.GetBestEnemyMonster();
+                ClientCard myBest = Util.GetBestBotMonster();
+                if (myBest.Id != target.Id) {
+                    return true;
+                }
+
+                if (Util.IsAllEnemyBetterThanValue(target.Attack, true)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool AMonsterReborn() {
+            int[] monster = new int[] {
+                CardId.DogmatikaEcclesiatheVirtuous,
+                CardId.FairyTailLuna
+            };
+            if (Bot.HasInGraveyard(monster)) {
+                AI.SelectCard(monster);
+                return true;
+            }
+            return false;
+        }
+
+        private bool ADogmaticaAdin() {
+            AI.SelectCard(DogmaticaCards);
+            return true;
+        }
+
+        private bool ADogmaticaEcclesia() {
+            AI.SelectCard(DogmaticaCards);
+            return true;
+        }
+
+        private bool ADogmaticaIron() {
+            ClientCard enemyExtra = Enemy.MonsterZone.GetMonsters().GetMatchingCards(card => card.HasType(CardType.Fusion) || card.HasType(CardType.Synchro) || card.HasType(CardType.Xyz) || card.HasType(CardType.Link)).OrderBy(card => card.Attack).LastOrDefault();
+            if(enemyExtra != null) {
+                AI.SelectCard(enemyExtra);
+                return true;
+            }
+            return false;
+        }
+
+        private bool SAlbaz() {
+            if(Enemy.MonsterZone.GetMatchingCardsCount(card=>(card.HasRace(CardRace.SpellCaster) && card.HasAttribute(CardAttribute.Light) || card.Attack >= 2500)) > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        private bool ADogmaticaFleurde() {
+            AI.SelectCard(Util.GetBestEnemyMonster());
+            return true;
+        }
+
+        private bool ADogmaticaAshiyan() {
+            AI.SelectCard(DogmaticaCards);
+            return true;
+        }
+
+        private bool ANadirServant() {
+            int[] selectCard = new int[] {
+                CardId.TitanikladtheAshDragon,
+                CardId.AlbiontheSanctifireDragon,
+                CardId.GranguignoltheDuskDragon,
+                CardId.AleistertheInvokerofMadness,
+            };
+
+            if(Bot.ExtraDeck.GetMatchingCardsCount(card=>card.IsCode(selectCard)) > 0) {
+                AI.SelectCard(selectCard);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ADogmanicaPunishment() {
+            if (Util.IsOneEnemyBetter()) {
+                AI.SelectCard(Util.GetBestEnemyMonster());
+                AI.SelectNextCard(
+                    CardId.TitanikladtheAshDragon,
+                    CardId.AlbiontheSanctifireDragon,
+                    CardId.GranguignoltheDuskDragon);
+                return true;
+            }
+            return false;
+        }
+
+        private bool AGranguignol() {
+            AI.SelectCard(
+                CardId.TitanikladtheAshDragon,
+                CardId.AlbiontheSanctifireDragon,
+                CardId.GranguignoltheDuskDragon);
+            return true;
+        }
+
+        private bool AAlbion() {
+            if(Card.Location != CardLocation.Grave) {
+                return true;
+            }
+            return false;
         }
     }
 }

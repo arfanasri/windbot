@@ -259,20 +259,20 @@
     },
     {
         "name": "Limit One - 1 CoSS",
-        "deck": "Coalition of Sagacious Spellcasters",
+        "deck": "CoSS",
         "difficulty": 2,
-        "masterRules": [ 5 ]
+        "masterRules": [ 3, 4, 5 ]
     },
     {
         "name": "Limit One - 2 AoB",
-        "deck": "Alliance of Beasts",
+        "deck": "AoB",
         "difficulty": 2,
-        "masterRules": [ 5 ]
+        "masterRules": [ 3, 4, 5 ]
     },
     {
-        "name": "Limit One - 2 ANSiBfA",
-        "deck": "A New Star is Born from Apocalypse",
+        "name": "Limit One - 3 ANSiBfA",
+        "deck": "ANSiBfA",
         "difficulty": 2,
-        "masterRules": [ 5 ]
+        "masterRules": [ 3, 4, 5 ]
     }
 ]

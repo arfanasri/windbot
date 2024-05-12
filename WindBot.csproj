@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Game\AI\Deck.cs" />
+    <Compile Include="Game\AI\Decks\LimitOneANewStarisBornfromApocalypseExecutor.cs" />
+    <Compile Include="Game\AI\Decks\LimitOneAllianceofBeastsExecutor.cs" />
+    <Compile Include="Game\AI\Decks\LimitOneCoalitionofSagaciousSpellcastersExecutor.cs" />
     <Compile Include="Game\AI\Decks\KashtiraExecutor.cs" />
     <Compile Include="Game\AI\Decks\TearlamentsExecutor.cs" />
     <Compile Include="Game\AI\Decks\ThunderDragonExecutor.cs" />
@@ -138,6 +141,24 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="COPYING">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_FusionxLinkFestivalAllConsumingVenomousDragon.ydk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_FusionxLinkFestivalVisitorsfrombeyondOblivion.ydk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_FusionxLinkFestivalUnchainedSoulUnleashed.ydk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_LimitOneANewStarisBornfromApocalypse.ydk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_LimitOneAllianceofBeasts.ydk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Decks\AI_LimitOneCoalitionofSagaciousSpellcasters.ydk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="LICENSE">
