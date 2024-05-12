@@ -93,21 +93,24 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Activate, CardId.Raigeki, DefaultRaigeki);
             AddExecutor(ExecutorType.Activate, CardId.AleistertheInvoker, AAleister);
             AddExecutor(ExecutorType.Activate, CardId.FairyTailLuna, AFairyTailLuna);
+            AddExecutor(ExecutorType.Activate, CardId.FairyTailSnow, AFairyTailSnow);
             AddExecutor(ExecutorType.Activate, CardId.OrbitalHydralander, AOrbitalHydralander);
             AddExecutor(ExecutorType.Activate, CardId.ChickenGame, DefaultChickenGame);
             AddExecutor(ExecutorType.Activate, CardId.FallenofAlbaz);
             AddExecutor(ExecutorType.Activate, CardId.TheGoldenSwordsoul);
+            AddExecutor(ExecutorType.Activate, CardId.TitanikladtheAshDragon);
             AddExecutor(ExecutorType.Activate, CardId.BlazingCartesiatheVirtuous);
             AddExecutor(ExecutorType.Activate, CardId.TheIrisSwordsoul);
             AddExecutor(ExecutorType.Activate, CardId.GranguignoltheDuskDragon, AGranguignol);
             AddExecutor(ExecutorType.Activate, CardId.AlbiontheSanctifireDragon, AAlbion);
             AddExecutor(ExecutorType.Activate, CardId.InvokedMechaba, DefaultDontChainMyself);
+            AddExecutor(ExecutorType.Activate, CardId.InvokedAugoeides, DefaultDontChainMyself);
             AddExecutor(ExecutorType.Activate, CardId.PSYFramelordOmega);
 
             // Combo AccesscodeTalker
             AddExecutor(ExecutorType.Activate, CardId.SeleneQueenoftheMasterMagicians);
             AddExecutor(ExecutorType.SpSummon, CardId.SeleneQueenoftheMasterMagicians);
-            AddExecutor(ExecutorType.Activate, CardId.AccesscodeTalker);
+            AddExecutor(ExecutorType.Activate, CardId.AccesscodeTalker, AAccesscodeTalker);
             AddExecutor(ExecutorType.SpSummon, CardId.AccesscodeTalker);
 
             // Combo Aleister
@@ -122,13 +125,13 @@ namespace WindBot.Game.AI.Decks
             AddExecutor(ExecutorType.Summon, CardId.SpellbookMagicianofProphecy, SMonster);
             AddExecutor(ExecutorType.Activate, CardId.SpellbookofJudgment,ASpeelbookJudgment);
             AddExecutor(ExecutorType.Activate, CardId.SpellbookofSecrets, ASpellbookSecrets);
-            AddExecutor(ExecutorType.Activate, CardId.SpellbookofKnowledge);
-            AddExecutor(ExecutorType.Activate, CardId.SpellbookofLife,ASpellbookLife);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofKnowledge, DefaultDontChainMyself);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofLife, ASpellbookLife);
             AddExecutor(ExecutorType.Activate, CardId.SpellbookoftheMaster, ASpellbookMaster);
             AddExecutor(ExecutorType.Activate, CardId.SpellbookofPower, ASpellbookPower);
-            AddExecutor(ExecutorType.Activate, CardId.SpellbookofEternity);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofEternity, DefaultDontChainMyself);
             AddExecutor(ExecutorType.Activate, CardId.TheGrandSpellbookTower,ASpeelbookTower);
-            AddExecutor(ExecutorType.Activate, CardId.SpellbookofWisdom);
+            AddExecutor(ExecutorType.Activate, CardId.SpellbookofWisdom, DefaultDontChainMyself);
             AddExecutor(ExecutorType.Activate, CardId.SpellbookofFate, ASpeelbookFate);
             AddExecutor(ExecutorType.Activate, CardId.HighPriestessofProphecy, AHighPriest);
 
@@ -162,10 +165,12 @@ namespace WindBot.Game.AI.Decks
 
             // Summon Monster
             AddExecutor(ExecutorType.Summon, CardId.FallenofAlbaz, SAlbaz);
-            AddExecutor(ExecutorType.Summon, CardId.IncredibleEcclesiatheVirtuous);
+            AddExecutor(ExecutorType.Summon, CardId.IncredibleEcclesiatheVirtuous,SMonster);
+            AddExecutor(ExecutorType.Summon, CardId.DogmatikaTheotheIronPunch,SMonster);
             AddExecutor(ExecutorType.Summon, CardId.FairyTailLuna, SMonster);
             AddExecutor(ExecutorType.Summon, CardId.FairyTailSnow, SMonster);
             AddExecutor(ExecutorType.Summon, CardId.DogmatikaEcclesiatheVirtuous, SMonster);
+            AddExecutor(ExecutorType.Summon, CardId.BlazingCartesiatheVirtuous, SMonster);
 
             // More Follow Up
             AddExecutor(ExecutorType.Activate, CardId.WonderWand, AWonderWand);
@@ -467,6 +472,14 @@ namespace WindBot.Game.AI.Decks
             return true;
         }
 
+        private bool AFairyTailSnow() {
+            if(Card.Location == CardLocation.MonsterZone) {
+                AI.SelectCard(Util.GetBestEnemyMonster());
+                return true;
+            }
+            return false;
+        }
+
         private bool AOrbitalHydralander() {
             if(Util.GetBestEnemyCard() != null) {
                 AI.SelectCard(Util.GetBestEnemyCard());
@@ -521,16 +534,25 @@ namespace WindBot.Game.AI.Decks
         }
 
         private bool ADogmaticaAdin() {
+            if(Card.Location == CardLocation.Hand) {
+                return true;
+            }
             AI.SelectCard(DogmaticaCards);
             return true;
         }
 
         private bool ADogmaticaEcclesia() {
+            if (Card.Location == CardLocation.Hand) {
+                return true;
+            }
             AI.SelectCard(DogmaticaCards);
             return true;
         }
 
         private bool ADogmaticaIron() {
+            if (Card.Location == CardLocation.Hand) {
+                return true;
+            }
             ClientCard enemyExtra = Enemy.MonsterZone.GetMonsters().GetMatchingCards(card => card.HasType(CardType.Fusion) || card.HasType(CardType.Synchro) || card.HasType(CardType.Xyz) || card.HasType(CardType.Link)).OrderBy(card => card.Attack).LastOrDefault();
             if(enemyExtra != null) {
                 AI.SelectCard(enemyExtra);
@@ -594,6 +616,13 @@ namespace WindBot.Game.AI.Decks
 
         private bool AAlbion() {
             if(Card.Location != CardLocation.Grave) {
+                return true;
+            }
+            return false;
+        }
+
+        private bool AAccesscodeTalker() {
+            if(Bot.Graveyard.GetMatchingCardsCount(card=>card.HasType(CardType.Link)) > 0) {
                 return true;
             }
             return false;
