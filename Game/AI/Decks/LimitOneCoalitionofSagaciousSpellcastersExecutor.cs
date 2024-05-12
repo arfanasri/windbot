@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace WindBot.Game.AI.Decks
 {
-    [Deck("CoSS", "AI_LimitOneCoalitionofSagaciousSpellcasters", "Master Duel")]
+    [Deck("LOCoSS", "AI_LimitOneCoalitionofSagaciousSpellcasters", "Master Duel")]
     public class LimitOneCoalitionofSagaciousSpellcastersExecutor : DefaultExecutor
     {
         public class CardId {
